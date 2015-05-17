@@ -1,8 +1,13 @@
+import {inject} from 'aurelia-framework';
 import {
   computedFrom
 }
 from 'aurelia-framework';
-
+import {
+  Router
+}
+from 'aurelia-router';
+@inject(Router)
 export class Home {
   constructor(Router) {
     this.router = Router;
@@ -24,9 +29,9 @@ export class Home {
       "viewCount": 15,
       "answerCount": 0,
       "score": -1,
-      "lastActivityDate": 1431782565,
-      "creationDate": 1431781521,
-      "lastEditDate": 1431782565,
+      "lastActivityDate": 1431782565 * 1000,
+      "creationDate": 1431781521 * 1000,
+      "lastEditDate": 1431782565 * 1000,
       "id": 30276022,
       "link": "http://stackoverflow.com/questions/30276022/bitmapfactory-decodebytearray-returning-null",
       "title": "BitmapFactory.decodeByteArray returning null"
@@ -50,9 +55,9 @@ export class Home {
       "viewCount": 16,
       "answerCount": 0,
       "score": 0,
-      "lastActivityDate": 1431782561,
-      "creationDate": 1431680574,
-      "lastEditDate": 1431782561,
+      "lastActivityDate": 1431782561 * 1000,
+      "creationDate": 1431680574 * 1000,
+      "lastEditDate": 1431782561 * 1000,
       "id": 30255524,
       "link": "http://stackoverflow.com/questions/30255524/loopback-rest-findbyid-doesnt-work-well",
       "title": "Loopback REST findById doesn&#39;t work well"
@@ -71,13 +76,43 @@ export class Home {
     alert(`Welcome, ${this.fullName}!`);
   }
   goto(questionDetails) {
-    this.router.navigate(questionDetails);
+    this.router.navigate(`questions/${questionDetails}`);
   }
 }
 
 export class UpperValueConverter {
   toView(value) {
     return value && value.toUpperCase();
+  }
+}
+
+export class TimeAgoValueConverter {
+  toView(date) {
+
+    var seconds = Math.floor((new Date() - date) / 1000);
+
+    var interval = Math.floor(seconds / 31536000);
+
+    if (interval > 1) {
+      return interval + " years";
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+      return interval + " months";
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+      return interval + " days";
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+      return interval + " hours";
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+      return interval + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
   }
 }
 
@@ -91,10 +126,11 @@ export class Question {
     this.answerCount = args.answerCount;
     this.lastActivityDate = args.lastActivityDate;
     this.creationDate = args.creationDate;
+    this.id = args.id;
     this.lastEditDate = args.lastEditDate;
-    this.id = args.lastEditDate;
     this.link = args.link;
     this.title = args.title;
+    this.edited = args.creationDate == args.lastEditDate ? false : true;
   }
 
 }

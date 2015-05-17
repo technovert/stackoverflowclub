@@ -3,10 +3,10 @@
     <div id="qlist-wrapper">
       <div id="question-mini-list">
         <div repeat.for="question of questions" class="question-summary narrow" id="question-summary-${question.id}">
-          <div click.delegate="goto(question.id)" class="cp">
+          <div click.delegate="$parent.goto(question.id)" class="cp">
             <div class="votes">
               <div class="mini-counts">
-                <span title="0 votes">${question.score}</span>
+                <span title="${question.score} votes">${question.score}</span>
               </div>
               <div>votes</div>
             </div>
@@ -24,12 +24,14 @@
             </div>
           </div>
           <div class="summary">
-            <h3><a href="#/questions/${question.id}" class="question-hyperlink" title="${question.title} ...">${question.title}</a></h3>
+            <h3><a href="#/questions/${question.id}" class="question-hyperlink" title="${question.title} ..." innerhtml.bind="question.title"></a></h3>
             <div repeat.for="tag of question.tags" class="tags t-${tag}">
               <a href="#/questions/tagged/${tag}" class="post-tag" title="show questions tagged '${tag}'" rel="tag">${tag}</a>
             </div>
             <div class="started">
-              <a href="#/questions/${question.id}" class="started-link">asked <span title="${question.creationDate}" class="relativetime">1 min ago</span></a>
+              <a href="#/questions/${question.id}" class="started-link">${question.edited?'modified':'asked'}
+                <span title="${question.creationDate}" class="relativetime">${question.edited?question.lastEditDate:question.creationDate|timeAgo} ago</span>
+              </a>
               <a href="#/users/${question.owner.user_id}/${question.owner.display_name}">${question.owner.display_name}</a>
               <span class="reputation-score" title="reputation score " dir="ltr">${question.owner.reputation}</span>
             </div>
