@@ -1,5 +1,125 @@
 <template>
-  <div>
-    Question comes here.
+  <div itemscope="" itemtype="http://schema.org/Question">
+    <div id="question-header">
+      <h1 itemprop="name"><a href="/questions/${question.id}" class="question-hyperlink">${question.title}</a></h1>
+    </div>
+    <div id="mainbar">
+      <div class="question" data-questionid="${question.id}" id="question">
+
+        <table>
+          <tbody>
+            <tr>
+              <td class="votecell">
+
+
+                <div class="vote">
+                  <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+                  <span itemprop="upvoteCount" class="vote-count-post ">${question.score}</span>
+                  <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+
+                  <a class="star-off" href="#" title="This is a favorite question (click again to undo)">favorite</a>
+                  <div class="favoritecount"><b></b></div>
+
+
+                </div>
+
+              </td>
+
+              <td class="postcell">
+                <div>
+                  <div class="post-text" itemprop="text" innerhtml.bind="details">
+                  </div>
+                  <div class="post-taglist">
+                    <a repeat.for="tag of question.tags" href="/questions/tagged/${tag}" class="post-tag js-gps-track" title="show questions tagged '${tag}'" rel="tag">${tag}</a>
+                  </div>
+                  <table class="fw">
+                    <tbody>
+                      <tr>
+                        <td class="vt">
+                          <div class="post-menu"><a href="/q/${question.id}" title="short permalink to this question" class="short-link" id="link-post-${question.id}">share</a></div>
+                        </td>
+                        <td class="post-signature owner">
+                          <div class="user-info ">
+                            <div class="user-action-time">
+                              asked
+                              <span title="${question.creationDate}" class="relativetime">${question.creationDate|timeAgo}</span>
+                            </div>
+                            <div class="user-gravatar32">
+                              <a href="/users/${question.owner.user_id}/${question.owner.display-name}">
+                                <div class="gravatar-wrapper-32">
+                                  <img src.bind="question.owner.profile-image" alt="" width="32" height="32">
+                                </div>
+                              </a>
+                            </div>
+                            <div class="user-details">
+                              <a href="/users/${question.owner.user_id}/${question.owner.display-name}">${question.owner.display-name}</a>
+                              <br>
+                              <span class="reputation-score" title="reputation score " dir="ltr">${question.owner.reputation}</span>
+                              <span title="N gold badges">
+                                <span class="badge1"></span>
+                                <span class="badgecount">2</span>
+                              </span>
+                              <span title="N silver badges">
+                                <span class="badge2"></span>
+                                <span class="badgecount">14</span>
+                              </span>
+                              <span title="N bronze badges">
+                                <span class="badge3"></span>
+                                <span class="badgecount">34</span>
+                              </span>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="votecell"></td>
+              <td>
+                <div id="comments-${question.id}" class="comments  dno">
+                  <table>
+                    <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div id="comments-link-${question.id}" data-rep="50" data-anon="true">
+
+                  <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments.">add a comment</a>
+                  <span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+                  <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="#" onclick=""></a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="answers">
+        <a name="tab-top"></a>
+        <div id="answers-header">
+          <div class="subheader answers-subheader">
+            <h2 show.bind="question.answerCount == 0"></h2>
+            <h2 show.bind="question.answerCount > 0">${question.answerCount} ${question.answerCount > 1?'Answers':'Answer'}</h2>
+            <div if.bind="question.answerCount > 0">
+              <div id="tabs">
+                <a href="/questions/${question.id}/oauth2-client-user-access-tokens-flow?answertab=active#tab-top" title="Answers with the latest activity first">active</a>
+                <a href="/questions/${question.id}/oauth2-client-user-access-tokens-flow?answertab=oldest#tab-top" title="Answers in the order they were provided">oldest</a>
+                <a class="youarehere" href="/questions/${question.id}/oauth2-client-user-access-tokens-flow?answertab=votes#tab-top" title="Answers with the highest score first">votes</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
