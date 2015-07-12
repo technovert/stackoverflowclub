@@ -1,17 +1,15 @@
 <template>
+  <require from="./value-converters"></require>
   <div itemscope="" itemtype="http://schema.org/Question">
     <div id="question-header">
-      <h1 itemprop="name"><a href="/questions/${question.id}" class="question-hyperlink">${question.title}</a></h1>
+      <h1 itemprop="name"><a href="/questions/${question.id}" class="question-hyperlink" innerhtml.bind="question.title"></a></h1>
     </div>
     <div id="mainbar">
       <div class="question" data-questionid="${question.id}" id="question">
-
         <table>
           <tbody>
             <tr>
               <td class="votecell">
-
-
                 <div class="vote">
                   <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
                   <span itemprop="upvoteCount" class="vote-count-post ">${question.score}</span>
@@ -19,15 +17,13 @@
 
                   <a class="star-off" href="#" title="This is a favorite question (click again to undo)">favorite</a>
                   <div class="favoritecount"><b></b></div>
-
-
                 </div>
 
               </td>
 
               <td class="postcell">
                 <div>
-                  <div class="post-text" itemprop="text" innerhtml.bind="details">
+                  <div class="post-text" itemprop="text" innerhtml.bind="question.details">
                   </div>
                   <div class="post-taglist">
                     <a repeat.for="tag of question.tags" href="/questions/tagged/${tag}" class="post-tag js-gps-track" title="show questions tagged '${tag}'" rel="tag">${tag}</a>

@@ -6,14 +6,20 @@ import {
   Router
 }
 from 'aurelia-router';
+import {
+  SOClient
+}
+from './stackoverflowclient'
 
-@inject(Router)
+@
+inject(Router, SOClient)
 export class Question {
-  constructor(Router) {
-
+  constructor(Router, SOClient) {
+    this.soClient = SOClient;
   }
 
   activate(params, routeConfig) {
-    console.log(`Question with ${params.id} loaded.`);
+    this.question = this.soClient.loadRecentQuestions()
+      .filter((q) => q.id === parseInt(params.id))[0];
   }
 }
