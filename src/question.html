@@ -23,7 +23,7 @@
 
               <td class="postcell">
                 <div>
-                  <div class="post-text" itemprop="text" innerhtml.bind="question.details">
+                  <div class="post-text" itemprop="text" innerhtml.bind="question.body">
                   </div>
                   <div class="post-taglist">
                     <a repeat.for="tag of question.tags" href="/questions/tagged/${tag}" class="post-tag js-gps-track" title="show questions tagged '${tag}'" rel="tag">${tag}</a>
@@ -41,14 +41,14 @@
                               <span title="${question.creationDate}" class="relativetime">${question.creationDate|timeAgo}</span>
                             </div>
                             <div class="user-gravatar32">
-                              <a href="/users/${question.owner.user_id}/${question.owner.display-name}">
+                              <a href="/users/${question.owner.user_id}/${question.owner.display_name}">
                                 <div class="gravatar-wrapper-32">
-                                  <img src.bind="question.owner.profile-image" alt="" width="32" height="32">
+                                  <img src.bind="question.owner.profile_image" alt="" width="32" height="32">
                                 </div>
                               </a>
                             </div>
                             <div class="user-details">
-                              <a href="/users/${question.owner.user_id}/${question.owner.display-name}">${question.owner.display-name}</a>
+                              <a href="/users/${question.owner.user_id}/${question.owner.display_name}">${question.owner.display_name}</a>
                               <br>
                               <span class="reputation-score" title="reputation score " dir="ltr">${question.owner.reputation}</span>
                               <span title="N gold badges">
