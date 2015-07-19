@@ -13,7 +13,7 @@ from 'aurelia-router';
 import {
   SOClient
 }
-from './stackoverflowclient'
+from './stackoverflow-client'
 
 @
 inject(Router, SOClient)
@@ -22,7 +22,11 @@ export class Home {
   constructor(Router, SOClient) {
     this.router = Router;
     this.soClient = SOClient;
-    this.questions = this.soClient.loadRecentQuestions();
+    this.questions = [];
+    this.soClient.loadRecentQuestions()
+      .then(qs => {
+        this.questions = qs;
+      });
   }
 
   goto(questionDetails) {

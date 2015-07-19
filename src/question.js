@@ -9,7 +9,7 @@ from 'aurelia-router';
 import {
   SOClient
 }
-from './stackoverflowclient'
+from './stackoverflow-client'
 
 @
 inject(Router, SOClient)
@@ -19,7 +19,9 @@ export class Question {
   }
 
   activate(params, routeConfig) {
-    this.question = this.soClient.loadRecentQuestions()
-      .filter((q) => q.id === parseInt(params.id))[0];
+    this.soClient.loadQuestion(params.id)
+      .then(q => {
+        this.question = q;
+      });
   }
 }
